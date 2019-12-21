@@ -105,12 +105,3 @@ jobs:
           name: output
           path: output
 ```
-
-
-## Alternative: setup-action
-
-In the above, you're using pandoc from a pre-build docker image, that you're running as a *container* on your GitHub Actions host machine.
-
-Alternatively, you can use [Jim Hester](https://www.jimhester.com)'s [setup-pandoc](https://github.com/r-lib/actions/tree/master/setup-pandoc) action.
-This action will accept a `pandoc-version` as an input and install the respective version directly into your GitHub Actions *host machine*.
-This may take longer (?), and does not include LaTeX, but you can use pandoc in any of your steps and can even run a matrix build over different pandoc versions.
