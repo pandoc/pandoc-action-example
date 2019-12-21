@@ -6,7 +6,7 @@
 [![Advanced Usage](https://github.com/maxheld83/pandoc-example/workflows/Advanced%20Usage/badge.svg)](https://github.com/maxheld83/pandoc-example/actions)
 <!-- badges: end -->
 
-You can use [pandoc](https://pandoc.org/), the **swiss army knife of document conversion**, on GitHub Actions to convert documents.
+You can use [pandoc](https://pandoc.org/), the **universal markup converter**, on GitHub Actions to convert documents.
 
 GitHub Actions is an Infrastructure as a Service (IaaS) from GitHub, that allows you to automatically run code on GitHub's servers on every push (or a bunch of other GitHub events).
 For example, you can use GitHub Actions to convert some `file.md` to `file.pdf` (via LaTeX) and upload the results to a web host.
