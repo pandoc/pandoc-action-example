@@ -130,7 +130,7 @@ jobs:
       - run: echo "# Test A" > input_A.md  # create an example file
       - run: echo "# Test B" > input_B.md
       - run : |
-          echo ls *.md
+          ls *.md
           echo ::set-env name=FILELIST::$(ls *.md)
           mkdir merge
       - uses: docker://pandoc/latex:2.9
