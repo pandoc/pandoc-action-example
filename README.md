@@ -133,7 +133,7 @@ jobs:
           echo ls *.md
           echo ::set-env name=FILELIST::$(ls *.md)
           mkdir merge
-      - uses: docker://pandoc/core:2.9
+      - uses: docker://pandoc/latex:2.9
         with:
           args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf ${{ env.FILELIST }}
       - uses: actions/upload-artifact@master
