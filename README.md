@@ -84,10 +84,10 @@ You can also:
 - create an output directory to compile into; makes it easier to deploy outputs.
 - upload the output directory to [GitHub's artifact storage](https://help.github.com/en/articles/managing-a-workflow-run#downloading-logs-and-artifacts); you can quickly download the results from your GitHub Actions tab in your repo.
 
-Remember that wildcard substitution (say, `pandoc *.md`) or other shell features do not work inside GitHub Actions yaml files `args:` fields.
+Remember that wildcard substitution (say, `pandoc *.md`) or other shell features frequently used with pandoc do not work inside GitHub Actions yaml files `args:` fields.
 Only [GitHub Actions context and expression syntax](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions) can be used here.
 If you want to make use of such shell features, you have to run that in a separate step in a `run` field and store the result in the GitHub actions context.
-The below workflow includes an example of how to do this.
+The below workflow includes an example of how to do this to concatenate several input files.
 
 You can see it in action (haha!) [here](http://github.com/maxheld83/pandoc-example).
 
@@ -114,40 +114,4 @@ jobs:
         with:
           name: output
           path: output
-```
-
-## Pandoc merge operations for multiple input files
-
-Pandoc allows merging multiple input files in a single output file. If you
-intend to apply the GitHub-action on an unknown collection of files, it is
-necessary to pass a dynamically aggregated list of files to pandoc. The easiest
-way to transport the names is an environmental variable.
-
-To illustrate the mechanism, we generate two files `input_A.md` and
-`input_B.md`. The second step prints the files and stores their names in a
-variable `FILELIST`. This is a global environmental variable that can be
-accessed from each step (in contrast to individual `env` settings).
-
-```
-name: Merge operation
-
-on: push
-
-jobs:
-  convert_via_pandoc:
-    runs-on: ubuntu-18.04
-    steps:
-      - run: echo "# Test A" > input_A.md  # create an example file
-      - run: echo "# Test B" > input_B.md
-      - run : |
-          ls *.md
-          echo ::set-env name=FILELIST::$(ls *.md)
-          mkdir merge
-      - uses: docker://pandoc/latex:2.9
-        with:
-          args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf ${{ env.FILELIST }}
-      - uses: actions/upload-artifact@master
-        with:
-          name: merge
-          path: merge
 ```
