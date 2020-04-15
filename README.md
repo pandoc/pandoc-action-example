@@ -84,6 +84,11 @@ You can also:
 - create an output directory to compile into; makes it easier to deploy outputs.
 - upload the output directory to [GitHub's artifact storage](https://help.github.com/en/articles/managing-a-workflow-run#downloading-logs-and-artifacts); you can quickly download the results from your GitHub Actions tab in your repo.
 
+Remember that wildcard substitution (say, `pandoc *.md`) or other shell features frequently used with pandoc do not work inside GitHub Actions yaml files `args:` fields.
+Only [GitHub Actions context and expression syntax](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions) can be used here.
+If you want to make use of such shell features, you have to run that in a separate step in a `run` field and store the result in the GitHub actions context.
+The below workflow includes an example of how to do this to concatenate several input files.
+
 You can see it in action (haha!) [here](http://github.com/maxheld83/pandoc-example).
 
 ```
@@ -96,10 +101,15 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir output
+      - run: |
+          echo "Lorem ipsum" > lorem_1.md  # create two example files
+          echo "dolor sit amet" > lorem_2.md
+          mkdir output  # create output dir
+          # this will also include README.md
+          echo "::set-env name=FILELIST::$(printf '"%s" ' *.md)"
       - uses: docker://pandoc/latex:2.9
-        with: # needs a README in your repo root!
-          args: "--standalone --output=output/README.pdf README.md"
+        with:
+          args: --output=output/result.pdf ${{ env.FILELIST }}
       - uses: actions/upload-artifact@master
         with:
           name: output

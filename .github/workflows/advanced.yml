@@ -7,10 +7,15 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir output
+      - run: |
+          echo "Lorem ipsum" > lorem_1.md  # create two example files
+          echo "dolor sit amet" > lorem_2.md
+          mkdir output  # create output dir
+          # this will also include README.md
+          echo "::set-env name=FILELIST::$(printf '"%s" ' *.md)"
       - uses: docker://pandoc/latex:2.9
-        with: # needs a README in your repo root!
-          args: "--standalone --output=output/README.pdf README.md"
+        with:
+          args: --output=output/result.pdf ${{ env.FILELIST }}
       - uses: actions/upload-artifact@master
         with:
           name: output
