@@ -10,13 +10,15 @@ jobs:
       - run: |
           echo "Lorem ipsum" > lorem_1.md  # create two example files
           echo "dolor sit amet" > lorem_2.md
-          mkdir output  # create output dir
-          ls *.md
+          mkdir output2  # create output dir
+          ls *.md  # this will also include README.md
           echo "::set-env name=FILELIST::$(ls *.md)"
+      run: |
+          echo ${{ env.FILELIST }}
       - uses: docker://pandoc/latex:2.9
         with:
           args: --output=output/result.pdf ${{ env.FILELIST }}
       - uses: actions/upload-artifact@master
         with:
-          name: output
-          path: output
+          name: output2
+          path: output2
