@@ -11,7 +11,10 @@ jobs:
           echo "Lorem ipsum" > input_A.md  # create two example files
           echo "dolor sit amet" > input_B.md
           mkdir output  # create output dir
+          ls *.md
           echo "::set-env name=FILELIST::$(ls *.md)"
+          echo $FILELIST
+          echo ${{ env.FILELIST }}
       - uses: docker://pandoc/latex:2.9
         with:
           args: "--output=output/result.pdf ${{ env.FILELIST }}"
