@@ -8,8 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "# Test A" > input_A.md  # create two example files
-          echo "# Test B" > input_B.md
+          echo "Lorem ipsum" > input_A.md  # create two example files
+          echo "dolor sit amet" > input_B.md
           mkdir output  # create output dir
           echo "::set-env name=FILELIST::$(ls *.md)"
       - uses: docker://pandoc/latex:2.9
