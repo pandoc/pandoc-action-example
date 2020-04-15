@@ -7,10 +7,14 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir output
+      - run: |
+          echo "# Test A" > input_A.md  # create two example files
+          echo "# Test B" > input_B.md
+          mkdir output  # create output dir
+          echo "::set-env name=FILELIST::$(ls *.md)"
       - uses: docker://pandoc/latex:2.9
-        with: # needs a README in your repo root!
-          args: "--standalone --output=output/README.pdf README.md"
+        with:
+          args: "--output=output/result.pdf ${{ env.FILELIST }}"
       - uses: actions/upload-artifact@master
         with:
           name: output
