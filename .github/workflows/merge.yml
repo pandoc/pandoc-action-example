@@ -6,15 +6,14 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-18.04
     steps:
-      - run: echo "# Test A" > input_A.md  # create an example file
-      - run: echo "# Test B" > input_B.md
-      - run : |
-          ls *.md
-          echo ::set-env name=FILELIST::$(ls *.md)
+      - run: |
+          echo "# Test A" > input_A.md # create an example files
+          echo "# Test B" > input_B.md
           mkdir merge
+          echo "::set-env name=FILELIST::$(ls *.md)"
       - uses: docker://pandoc/latex:2.9
         with:
-          args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf $(ls *.md)
+          args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf ${{ env.FILELIST }}
       - uses: actions/upload-artifact@master
         with:
           name: merge
