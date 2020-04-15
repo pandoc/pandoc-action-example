@@ -14,7 +14,7 @@ jobs:
           mkdir merge
       - uses: docker://pandoc/latex:2.9
         with:
-          args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf ${{ env.FILELIST }}
+          args: -f markdown --toc --top-level-division=chapter --output=merge/result.pdf *.md
       - uses: actions/upload-artifact@master
         with:
           name: merge
