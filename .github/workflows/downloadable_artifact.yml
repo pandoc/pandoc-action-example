@@ -1,0 +1,17 @@
+name: Generate Word docs
+on: push
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: convert md to docx
+        uses: docker://pandoc/latex:2.9
+        with:
+          entrypoint: /bin/sh
+          args: -c "mkdir output;for d in */; do mkdir output/$d; done;find ./ -iname '*.md' -type f -exec sh -c 'pandoc ${0} -o output/${0%.md}.docx' {} \;"
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: output
