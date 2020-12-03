@@ -4,13 +4,19 @@ on: push
 jobs:
   convert_via_pandoc:
     runs-on: ubuntu-20.04
+    container:
+      image: docker://pandoc/latex:2.9
+      options: --entrypoint=sh
     steps:
       - uses: actions/checkout@v2
+      - name: prepare output directories
+        run: |
+          for d in */; do
+            mkdir -p output/$d
+          done
       - name: convert md to docx
-        uses: docker://pandoc/latex:2.9
-        with:
-          entrypoint: /bin/sh
-          args: -c "mkdir output;for d in */; do mkdir output/$d; done;find ./ -iname '*.md' -type f -exec sh -c 'pandoc ${0} -o output/${0%.md}.docx' {} \;"
+        run: |
+          find ./ -iname '*.md' -type f -exec sh -c 'pandoc ${0} -o output/${0%.md}.docx' {} \;
       - uses: actions/upload-artifact@master
         with:
           name: output
