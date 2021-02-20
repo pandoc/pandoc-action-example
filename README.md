@@ -68,7 +68,7 @@ jobs:
       - run: echo "foo" > input.txt  # create an example file
       - uses: docker://pandoc/core:2.9
         with:
-          args: |>  # allows you to break string into multiple lines
+          args: >-  # allows you to break string into multiple lines
             --standalone
             --output=index.html
             input.txt
