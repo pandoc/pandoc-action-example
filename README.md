@@ -101,15 +101,20 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: |
+
+      - name: create file list
+        id: files_list
+        run: |
           echo "Lorem ipsum" > lorem_1.md  # create two example files
           echo "dolor sit amet" > lorem_2.md
           mkdir output  # create output dir
           # this will also include README.md
-          echo "::set-env name=FILELIST::$(printf '"%s" ' *.md)"
+          echo "::set-output name=files::$(printf '"%s" ' *.md)"
+
       - uses: docker://pandoc/latex:2.9
         with:
-          args: --output=output/result.pdf ${{ env.FILELIST }}
+          args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
+          
       - uses: actions/upload-artifact@master
         with:
           name: output
