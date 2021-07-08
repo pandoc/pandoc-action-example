@@ -35,7 +35,7 @@ The below example is equivalent to running `pandoc --help`.
 
 You can see it in action [here](http://github.com/maxheld83/pandoc-example).
 
-```
+```yaml
 name: Simple Usage
 
 on: push
@@ -56,7 +56,7 @@ Remember that as per the [GitHub Actions workflow syntax](https://help.github.co
 Pandoc commands can sometimes get quite long and unwieldy, but you must pass them as a *single* string.
 If you want to break up the string over several lines, you can use YAML's [block chomping indicator](http://www.yaml.org/spec/1.2/spec.html#id2794534):
 
-```
+```yaml
 name: Long Usage
 
 on: push
@@ -91,7 +91,7 @@ The below workflow includes an example of how to do this to concatenate several 
 
 You can see it in action (haha!) [here](http://github.com/maxheld83/pandoc-example).
 
-```
+```yaml
 name: Advanced Usage
 
 on: push
