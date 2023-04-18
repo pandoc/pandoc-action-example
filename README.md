@@ -42,7 +42,7 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: docker://pandoc/core:2.9
         with:
@@ -63,7 +63,7 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - run: echo "foo" > input.txt  # create an example file
       - uses: docker://pandoc/core:2.9
@@ -98,7 +98,7 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
 
