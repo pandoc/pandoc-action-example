@@ -100,7 +100,7 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: create file list
         id: files_list
@@ -115,7 +115,7 @@ jobs:
         with:
           args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
           
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v3
         with:
           name: output
           path: output
