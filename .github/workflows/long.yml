@@ -13,3 +13,8 @@ jobs:
             --standalone
             --output=index.html
             input.txt
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Add output file'
+          add: '*.html --force'
+          cwd: './outputs/'
