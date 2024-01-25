@@ -120,3 +120,10 @@ jobs:
           name: output
           path: output
 ```
+
+## Alternatives
+
+If you need to have Pandoc installed and available globally, for example because it is being used in a subprocess by a library or application, you can use one of the two following alternative actions:
+
+- [pandoc/actions/setup](https://github.com/pandoc/actions/tree/main/setup) (Linux and MacOS runners support)
+- [r-lib/setup-pandoc](https://github.com/r-lib/actions/tree/v2-branch/setup-pandoc) (Linux, MacOS and Windows runners support)
