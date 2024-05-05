@@ -121,6 +121,22 @@ jobs:
           path: output
 ```
 
+## pandoc-extra and Github Actions
+
+Because Github Actions rewrites the value of `$HOME` in runners the template directory cannot be found leading to errors such as:
+
+```
+Could not find data file templates/eisvogel.latex
+```
+
+A work around to this is to specify the exact location on the filesystem of the template:
+
+```
+- uses: docker://pandoc/extra:3.1.1.0
+        with:
+          args: content/cv.md --output=content/cv.pdf --template /.pandoc/templates/eisvogel.latex --listings -V block-headings
+```
+
 ## Alternatives
 
 If you need to have Pandoc installed and available globally, for example because it is being used in a subprocess by a library or application, you can use one of the two following alternative actions:
