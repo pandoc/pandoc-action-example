@@ -20,7 +20,7 @@ You do not *need* a separate GitHub Action.
 If you need LaTeX (because you want to convert through to PDF), you should use the `docker://pandoc/latex` image.
 Otherwise, the smaller `docker://pandoc/core` will suffice.
 
-It is a good idea to be explicit about the pandoc version you require, such as `docker://pandoc/core:2.9`.
+It is a good idea to be explicit about the pandoc version you require, such as `docker://pandoc/core:3.5`.
 This way, any future breaking changes in pandoc will not affect your workflow.
 You can find out whatever the latest released docker image is on [docker hub](https://hub.docker.com/r/pandoc/core/tags).
 You should avoid specifying *no* tag or the `latest` tag -- these will float to the latest image and will expose your workflow to potentially breaking changes.
@@ -33,7 +33,7 @@ The string passed to `args` gets appended to the [`pandoc` command](https://pand
 
 The below example is equivalent to running `pandoc --help`.
 
-You can see it in action [here](http://github.com/maxheld83/pandoc-example).
+You can see it in action [here](https://github.com/pandoc/pandoc-action-example).
 
 ```yaml
 name: Simple Usage
@@ -44,7 +44,7 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-22.04
     steps:
-      - uses: docker://pandoc/core:2.9
+      - uses: docker://pandoc/core:3.5
         with:
           args: "--help" # gets appended to pandoc command
 ```
@@ -54,7 +54,7 @@ jobs:
 
 Remember that as per the [GitHub Actions workflow syntax](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepswithargs), "an `array of strings` is not supported by the `jobs.<job_id>.steps.with.args` parameter.
 Pandoc commands can sometimes get quite long and unwieldy, but you must pass them as a *single* string.
-If you want to break up the string over several lines, you can use YAML's [block chomping indicator](http://www.yaml.org/spec/1.2/spec.html#id2794534):
+If you want to break up the string over several lines, you can use YAML's [block chomping indicator](https://yaml.org/spec/1.2.2/#8112-block-chomping-indicator):
 
 ```yaml
 name: Long Usage
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: echo "foo" > input.txt  # create an example file
-      - uses: docker://pandoc/core:2.9
+      - uses: docker://pandoc/core:3.5
         with:
           args: >-  # allows you to break string into multiple lines
             --standalone
@@ -74,7 +74,7 @@ jobs:
             input.txt
 ```
 
-You can see it in action [here](http://github.com/maxheld83/pandoc-example).
+You can see it in action [here](https://github.com/pandoc/pandoc-action-example).
 
 
 ## Advanced Usage
@@ -89,7 +89,7 @@ Only [GitHub Actions context and expression syntax](https://help.github.com/en/a
 If you want to make use of such shell features, you have to run that in a separate step in a `run` field and store the result in the GitHub actions context.
 The below workflow includes an example of how to do this to concatenate several input files.
 
-You can see it in action (haha!) [here](http://github.com/maxheld83/pandoc-example).
+You can see it in action (haha!) [here](https://github.com/pandoc/pandoc-action-example).
 
 ```yaml
 name: Advanced Usage
@@ -100,7 +100,7 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: create file list
         id: files_list
@@ -111,11 +111,11 @@ jobs:
           # this will also include README.md
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
 
-      - uses: docker://pandoc/latex:2.9
+      - uses: docker://pandoc/latex:3.5
         with:
           args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
           
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: output
           path: output
@@ -132,7 +132,7 @@ Could not find data file templates/eisvogel.latex
 A work around to this is to specify the exact location on the filesystem of the template:
 
 ```
-- uses: docker://pandoc/extra:3.1.1.0
+- uses: docker://pandoc/extra:3.5
         with:
           args: content/cv.md --output=content/cv.pdf --template /.pandoc/templates/eisvogel.latex --listings -V block-headings
 ```
