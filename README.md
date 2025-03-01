@@ -14,7 +14,7 @@ For example, you can use GitHub Actions to convert some `file.md` to `file.pdf` 
 
 ## Using `docker://pandoc` Images Directly
 
-You can now *directly* [reference container actions](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#referencing-a-container-on-docker-hub) on GitHub Actions.
+You can now *directly* [reference container actions](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-pre-written-building-blocks-in-your-workflow#referencing-a-container-on-docker-hub) on GitHub Actions.
 You do not *need* a separate GitHub Action.
 
 If you need LaTeX (because you want to convert through to PDF), you should use the `docker://pandoc/latex` image.
