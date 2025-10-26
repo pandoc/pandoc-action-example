@@ -20,7 +20,7 @@ You do not *need* a separate GitHub Action.
 If you need LaTeX (because you want to convert through to PDF), you should use the `docker://pandoc/latex` image.
 Otherwise, the smaller `docker://pandoc/core` will suffice.
 
-It is a good idea to be explicit about the pandoc version you require, such as `docker://pandoc/core:3.5`.
+It is a good idea to be explicit about the pandoc version you require, such as `docker://pandoc/core:3.8`.
 This way, any future breaking changes in pandoc will not affect your workflow.
 You can find out whatever the latest released docker image is on [docker hub](https://hub.docker.com/r/pandoc/core/tags).
 You should avoid specifying *no* tag or the `latest` tag -- these will float to the latest image and will expose your workflow to potentially breaking changes.
@@ -42,10 +42,9 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: docker://pandoc/core:3.5
-        with:
+      - uses: docker://pandoc/core:3.8
           args: "--help" # gets appended to pandoc command
 ```
 
@@ -63,10 +62,10 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - run: echo "foo" > input.txt  # create an example file
-      - uses: docker://pandoc/core:3.5
+      - uses: docker://pandoc/core:3.8
         with:
           args: >-  # allows you to break string into multiple lines
             --standalone
@@ -98,7 +97,7 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -111,10 +110,10 @@ jobs:
           # this will also include README.md
           echo "files=$(printf '"%s" ' *.md)" > $GITHUB_OUTPUT
 
-      - uses: docker://pandoc/latex:3.5
+      - uses: docker://pandoc/latex:3.8
         with:
           args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-          
+
       - uses: actions/upload-artifact@v4
         with:
           name: output
@@ -132,7 +131,7 @@ Could not find data file templates/eisvogel.latex
 A work around to this is to specify the exact location on the filesystem of the template:
 
 ```
-- uses: docker://pandoc/extra:3.5
+- uses: docker://pandoc/extra:3.8
         with:
           args: content/cv.md --output=content/cv.pdf --template /.pandoc/templates/eisvogel.latex --listings -V block-headings
 ```

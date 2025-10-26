@@ -4,10 +4,10 @@ on: push
 
 jobs:
   convert_via_pandoc:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - run: echo "foo" > input.txt # create an example file
-      - uses: docker://pandoc/core:3.5
+      - uses: docker://pandoc/core:3.8
         with:
           args: >- # allows you to break string into multiple lines
             --standalone
