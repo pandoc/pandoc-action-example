@@ -132,8 +132,13 @@ A work around to this is to specify the exact location on the filesystem of the 
 
 ```
 - uses: docker://pandoc/extra:3.8
-        with:
-          args: content/cv.md --output=content/cv.pdf --template /.pandoc/templates/eisvogel.latex --listings -V block-headings
+  with:
+    args: >-  # break string of arguments into multiple lines
+      README.md --output=output/README.pdf
+      --standalone
+      --template /.pandoc/templates/eisvogel.latex
+      --listings
+      -V block-headings
 ```
 
 ## Alternatives
