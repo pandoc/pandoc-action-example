@@ -45,6 +45,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: docker://pandoc/core:3.8
+        with:
           args: "--help" # gets appended to pandoc command
 ```
 
